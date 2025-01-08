@@ -1,4 +1,4 @@
-import { Button, Empty, Flex, Table, TableProps } from "antd";
+import { Button, Empty, Table, TableProps } from "antd";
 import { FC, useState } from "react";
 import IDataTypeChallengeList from "../tables.type";
 import challengeListColumn from "../tables.config";
@@ -7,10 +7,11 @@ import { IGetAllChallengeParams } from "../../../../../../types/request/challeng
 import challengeManagerService from "../../../../../../service/ChallengeManager/challengeManagerService";
 import generateQueryKeyChallenges from "../../challengeList.utils";
 import { constantChallengeManagerQueryKey } from "../../../../../../constants/queryKey/challengeManager";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import constantRoutesChallengeManager from "../../../../../../constants/routes/challengeManager";
 import { PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { ActionChallenge } from "../Partials/ActionChallenge";
 
 const DEFAULT_CUREENT_PAGE: number = 1;
 const DEFAULT_PAGE_SIZE: number = 10;
@@ -27,8 +28,6 @@ const OtherChallengesTable: FC = () => {
   );
   const [total, setTotal] = useState<number>(0);
   const [challenges, setChallenges] = useState<IDataTypeChallengeList[]>([]);
-  const navigate = useNavigate();
-  console.log("render other challenges");
   const columns = challengeListColumn || [];
   const queryKeys = generateQueryKeyChallenges(
     constantChallengeManagerQueryKey.challenge.otherChallenges,
@@ -119,26 +118,11 @@ const OtherChallengesTable: FC = () => {
     {
       width: 200,
       title: "Hành động",
-      key: "actions",
       fixed: "right",
-      render: (_, record: IDataTypeChallengeList) => {
-        return (
-          <>
-            <Flex gap={12} justify="start" align="center">
-              <Button
-                type="primary"
-                onClick={() =>
-                  navigate(
-                    `${constantRoutesChallengeManager.pages.challenges.details}/:${record.id}`,
-                  )
-                }
-              >
-                Xem chi tiết
-              </Button>
-            </Flex>
-          </>
-        );
-      },
+      key: "actions",
+      render: (_, record: IDataTypeChallengeList) => (
+        <ActionChallenge challenge={record} />
+      ),
     },
   ];
 

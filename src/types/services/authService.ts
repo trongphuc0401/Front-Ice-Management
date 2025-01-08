@@ -4,6 +4,7 @@ import {
   IRefreshTokenRequest,
   IRegisterTaskerRequest,
   IRemoveFileRequest,
+  ISendOTPRequest,
   IUpdateProfileMentorRequest,
   IUpdateProfileRequest,
   IVerifyOtpParams,
@@ -40,4 +41,6 @@ export type IAuthService = {
   changePassword: (
     data: IChangePasswordRequest,
   ) => Promise<IBaseResponse<null>>;
+
+  sendOTP: (data: ISendOTPRequest) => Promise<IBaseResponse<null>>;
 };

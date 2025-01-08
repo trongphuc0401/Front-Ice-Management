@@ -11,8 +11,6 @@ import { MyChallengesTable } from "../../ChallengeManager/Challenges/List/Tables
 const ChallengeManagerProfile = () => {
   const profile = useAuthStore((state) => state.profile);
 
-  console.log(profile?.adminRole);
-
   if (!profile) {
     return <Navigate to={constantRoutesGlobal.errorPage["404"]} replace />;
   }

@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { Divider, Flex, Card, Avatar, Empty, Typography, Row, Col } from "antd";
 import { useParams, Navigate } from "react-router";
-import { TaskOverview } from "../../../../components/Components/TaskOverview";
 import { ViewReportsTask } from "../../../../components/Components/ViewReportsTask";
 import constantRoutesGlobal from "../../../../constants/routes/global";
-import { ITaskEntity } from "../../../../types/entity/task";
 import { ActionsWithReport } from "../../../ChallengeManager/Task/Details/Partials/ActionsWithReport";
 import taskerQueryKeys from "../../../../constants/queryKey/tasker/taskerQueryKey";
 import taskerService from "../../../../service/Tasker/taskerService";
+import ListTaskSolution from "./Partials/ListTaskSolution/ListTaskSolution";
+import { TaskTaskerOverview } from "./Partials/TaskTaskerOverview";
 
 const defautlAvatar =
   "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg";
@@ -40,12 +40,7 @@ const TaskDetailsPage = () => {
             reportNumber={dataTaskDetails?.reports?.length}
           />
         )}
-      <TaskOverview
-        taskData={dataTaskDetails as ITaskEntity}
-        isLoading={isFetching}
-        buttonDownloadFiles
-      />
-
+      <TaskTaskerOverview taskId={taskId} />
       <Row>
         <Col span={24}>
           <Card
@@ -70,7 +65,6 @@ const TaskDetailsPage = () => {
           </Card>
         </Col>
       </Row>
-
       <Row gutter={12}>
         <Col span={12}>
           <Card
@@ -118,21 +112,17 @@ const TaskDetailsPage = () => {
           </Card>
         </Col>
       </Row>
-
       <Divider orientation="left" plain>
         <Title level={4} style={{ margin: "0" }}>
           Danh sách <span style={{ color: "#1CBD74" }}>giải pháp đã nộp</span>
         </Title>
       </Divider>
-
-      {/* <ListSolutionTask taskId={taskId} /> */}
-
+      <ListTaskSolution taskId={taskId} />
       <Divider orientation="left" plain>
         <Title level={4} style={{ margin: "0" }}>
           Danh sách <span style={{ color: "#EA5B33" }}>tố cáo</span>
         </Title>
       </Divider>
-
       {dataTaskDetails?.reports ? (
         <ViewReportsTask reportsData={dataTaskDetails?.reports} />
       ) : (

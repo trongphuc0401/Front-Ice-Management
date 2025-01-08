@@ -10,6 +10,7 @@ const constantRoutesAuth = {
     root: "tasker",
     login: "login",
     register: "register",
+    emailRegistration: "email-registration",
     verifyOtp: "verify-otp",
     forgotPassword: "forgot-password",
     registerSuccess: "register-success",

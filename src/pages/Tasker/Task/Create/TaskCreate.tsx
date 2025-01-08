@@ -1,4 +1,4 @@
-import { InboxOutlined } from "@ant-design/icons";
+import { InboxOutlined } from '@ant-design/icons';
 import {
   Flex,
   Button,
@@ -12,17 +12,17 @@ import {
   UploadProps,
   DatePicker,
   DatePickerProps,
-} from "antd";
-import Dragger from "antd/es/upload/Dragger";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
-import { ICreateTaskRequest } from "../../../../types/request/tasker/task";
-import taskerService from "../../../../service/Tasker/taskerService";
-import { useMutation } from "@tanstack/react-query";
-import mutationKey from "../../../../constants/mutation";
-import constantRoutesTasker from "../../../../constants/routes/tasker";
+} from 'antd';
+import Dragger from 'antd/es/upload/Dragger';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import challengeManagerService from '../../../../service/ChallengeManager/challengeManagerService';
+import { ICreateTaskRequest } from '../../../../types/request/tasker/task';
+import taskerService from '../../../../service/Tasker/taskerService';
+import { useMutation } from '@tanstack/react-query';
+import mutationKey from '../../../../constants/mutation';
+import constantRoutesTasker from '../../../../constants/routes/tasker';
 
 type IFormFieldData = ICreateTaskRequest;
 
@@ -36,7 +36,7 @@ const TaskCreatePage = () => {
   const [imagePath, setImagePath] = useState<string | null>(null);
   const [, setTechnicalList] = useState<string[]>([]);
   const [plusPoint, setPlusPoint] = useState<number>(0);
-  const [, setExpiredTime] = useState<number | null>(null);
+  const [expiredTime, setExpiredTime] = useState<string | null>(null);
   const normFile = (e: any) => {
     console.log(e);
     if (Array.isArray(e)) {
@@ -52,8 +52,8 @@ const TaskCreatePage = () => {
   });
 
   const propsDraggerSource: UploadProps = {
-    name: "file",
-    listType: "picture",
+    name: 'file',
+    listType: 'picture',
     maxCount: 1,
     customRequest: async ({ file, onSuccess, onError }) => {
       if (file) {
@@ -69,25 +69,25 @@ const TaskCreatePage = () => {
                 return;
               }
 
-              toast.error("Không tìm thấy đường dẫn thư mục cung cấp đăng tải");
+              toast.error('Không tìm thấy đường dẫn thư mục cung cấp đăng tải');
             })
             .catch((error) => {
               onError && onError(error);
               throw error;
             }),
           {
-            pending: "Đang thực hiện đăng tải thư mục cung cấp",
-            success: "Đăng tải thư mục cung cấp thành công",
-            error: "Đăng tải thư mục cung cấp thất bại",
-          },
+            pending: 'Đang thực hiện đăng tải thư mục cung cấp',
+            success: 'Đăng tải thư mục cung cấp thành công',
+            error: 'Đăng tải thư mục cung cấp thất bại',
+          }
         );
       }
     },
-    accept: ".zip",
+    accept: '.zip',
     // onChange: async (info) => {
     // },
     onDrop(e) {
-      console.log("Dropped files", e.dataTransfer.files);
+      console.log('Dropped files', e.dataTransfer.files);
     },
     onRemove: async () => {
       if (sourcePath) {
@@ -100,10 +100,10 @@ const TaskCreatePage = () => {
               setSourcePath(null);
             }),
           {
-            pending: "Đang thực hiện xóa thư mục cung cấp",
-            success: "Xóa thư mục cung cấp thành công",
-            error: "Xóa thư mục cung cấp thất bại",
-          },
+            pending: 'Đang thực hiện xóa thư mục cung cấp',
+            success: 'Xóa thư mục cung cấp thành công',
+            error: 'Xóa thư mục cung cấp thất bại',
+          }
         );
       }
 
@@ -112,9 +112,9 @@ const TaskCreatePage = () => {
   };
 
   const propsDraggerFigma: UploadProps = {
-    name: "file",
+    name: 'file',
     maxCount: 1,
-    listType: "picture",
+    listType: 'picture',
     customRequest: async ({ file, onSuccess, onError }) => {
       if (file) {
         return toast.promise(
@@ -129,21 +129,21 @@ const TaskCreatePage = () => {
                 return;
               }
 
-              toast.error("Không tìm thấy đường dẫn file thiết kế đăng tải");
+              toast.error('Không tìm thấy đường dẫn file thiết kế đăng tải');
             })
             .catch((error) => {
               onError && onError(error);
               throw error;
             }),
           {
-            pending: "Đang thực hiện đăng tải file thiết kế",
-            success: "Đăng tải file thiết kế thành công",
-            error: "Đăng tải file thiết kế thất bại",
-          },
+            pending: 'Đang thực hiện đăng tải file thiết kế',
+            success: 'Đăng tải file thiết kế thành công',
+            error: 'Đăng tải file thiết kế thất bại',
+          }
         );
       }
     },
-    accept: ".zip",
+    accept: '.zip',
     onRemove: async () => {
       if (figmaPath) {
         return toast.promise(
@@ -156,10 +156,10 @@ const TaskCreatePage = () => {
               return;
             }),
           {
-            pending: "Đang thực hiện xóa file thiết kế",
-            success: "Xóa file thiết kế thành công",
-            error: "Xóa file thiết kế thất bại",
-          },
+            pending: 'Đang thực hiện xóa file thiết kế',
+            success: 'Xóa file thiết kế thành công',
+            error: 'Xóa file thiết kế thất bại',
+          }
         );
       }
 
@@ -170,9 +170,9 @@ const TaskCreatePage = () => {
   };
 
   const propsDraggerImage: UploadProps = {
-    name: "file",
+    name: 'file',
     maxCount: 1,
-    listType: "picture",
+    listType: 'picture',
     customRequest: async ({ file, onSuccess, onError }) => {
       if (file) {
         return toast.promise(
@@ -188,7 +188,7 @@ const TaskCreatePage = () => {
               }
 
               toast.error(
-                "Không tìm thấy đường dẫn ảnh bìa thử thách đăng tải",
+                'Không tìm thấy đường dẫn ảnh bìa thử thách đăng tải'
               );
             })
             .catch((error) => {
@@ -196,14 +196,14 @@ const TaskCreatePage = () => {
               throw error;
             }),
           {
-            pending: "Đang thực hiện đăng tải ảnh bìa thử thách",
-            success: "Đăng tải file ảnh bìa thử thách",
-            error: "Đăng tải ảnh bìa thử thách thất bại",
-          },
+            pending: 'Đang thực hiện đăng tải ảnh bìa thử thách',
+            success: 'Đăng tải file ảnh bìa thử thách',
+            error: 'Đăng tải ảnh bìa thử thách thất bại',
+          }
         );
       }
     },
-    accept: ".jpg, .png, .webp",
+    accept: '.jpg, .png, .webp',
     onRemove: async () => {
       if (imagePath) {
         return toast.promise(
@@ -216,10 +216,10 @@ const TaskCreatePage = () => {
               return;
             }),
           {
-            pending: "Đang thực hiện xóa file thiết kế",
-            success: "Xóa file thiết kế thành công",
-            error: "Xóa file thiết kế thất bại",
-          },
+            pending: 'Đang thực hiện xóa file thiết kế',
+            success: 'Xóa file thiết kế thành công',
+            error: 'Xóa file thiết kế thất bại',
+          }
         );
       }
 
@@ -229,27 +229,31 @@ const TaskCreatePage = () => {
     // },
   };
 
-  const handleSubmit: FormProps<IFormFieldData>["onFinish"] = (formValue) => {
+  const handleSubmit: FormProps<IFormFieldData>['onFinish'] = (formValue) => {
     formValue.source = sourcePath as string;
     formValue.figma = figmaPath as string;
     formValue.image = imagePath as string;
+    formValue.expired = expiredTime as string;
 
     toast.promise(
-      mutationCreateTask.mutateAsync({ ...formValue, desc: "{}" }).then(() => {
+      mutationCreateTask.mutateAsync({ ...formValue, desc: '{}' }).then(() => {
         navigate(
-          `/${constantRoutesTasker.task.root}/${constantRoutesTasker.task.list}`,
+          `/${constantRoutesTasker.task.root}/${constantRoutesTasker.task.list}`
         );
       }),
       {
-        pending: "Đang thực hiện đăng tải thử thách...",
-        success: "Đăng tải thử thách thất bại",
-        error: "Đăng tải thử thách thành công",
-      },
+        pending: 'Đang thực hiện đăng tải thử thách...',
+        success: 'Đăng tải thử thách thành công',
+        error: 'Đăng tải thử thách thất bại ',
+      }
     );
   };
 
-  const onChangeDatePicker: DatePickerProps["onChange"] = (value) => {
-    setExpiredTime(value.valueOf() / 1000);
+  const onChangeDatePicker: DatePickerProps['onChange'] = (value) => {
+    if (value) {
+      const dateStr = value.format('YYYY-MM-DD');
+      setExpiredTime(dateStr);
+    }
   };
 
   return (
@@ -257,28 +261,28 @@ const TaskCreatePage = () => {
       <Form
         onFinish={handleSubmit}
         layout="vertical"
-        style={{ maxWidth: 600, margin: "0 auto" }}
+        style={{ maxWidth: 600, margin: '0 auto' }}
       >
         <Title
-          style={{ textAlign: "center", width: "100%", marginBottom: "32px" }}
+          style={{ textAlign: 'center', width: '100%', marginBottom: '32px' }}
         >
-          Tạo thử thách
+          Tạo nhiệm vụ
         </Title>
         <Form.Item<IFormFieldData>
           name="title"
           rules={[
             {
               required: true,
-              message: "Tên thử thách không được bỏ trống !",
+              message: 'Tên nhiệm vụ không được bỏ trống !',
             },
           ]}
-          label="Tiêu đề thử thách"
-          style={{ flex: "1" }}
+          label="Tiêu đề nhiệm vụ"
+          style={{ flex: '1' }}
         >
-          <Input placeholder="Nhập tiêu đề thử thách" />
+          <Input placeholder="Nhập tiêu đề nhiệm vụ" />
         </Form.Item>
         <Form.Item<IFormFieldData> label="Thời gian kết thúc" name="expired">
-          <DatePicker style={{ width: "100%" }} onChange={onChangeDatePicker} />
+          <DatePicker style={{ width: '100%' }} onChange={onChangeDatePicker} />
         </Form.Item>
         <Flex justify="space-between" align="stretch" gap={24}>
           <Form.Item<IFormFieldData>
@@ -286,15 +290,15 @@ const TaskCreatePage = () => {
             rules={[
               {
                 required: true,
-                message: "Công nghệ sử dụng không được để trống",
+                message: 'Công nghệ sử dụng không được để trống',
               },
             ]}
             label="Công nghệ sử dụng"
-            style={{ flex: "2" }}
+            style={{ flex: '2' }}
           >
             <Select
               mode="tags"
-              tokenSeparators={[","]}
+              tokenSeparators={[',']}
               placeholder="Chọn các công nghệ sử dụng cho thử thách"
               onChange={(value) => setTechnicalList(value)}
             >
@@ -303,24 +307,10 @@ const TaskCreatePage = () => {
               <Select.Option value="javascript">Javascript</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item<IFormFieldData>
-            name="level_id"
-            rules={[{ required: true, message: "Cấp độ không được để trống" }]}
-            label="Cấp độ thử thách"
-            style={{ flex: "1" }}
-          >
-            <Select placeholder="Chọn cấp độ của thử thách">
-              <Select.Option value="1">Người mới</Select.Option>
-              <Select.Option value="2">Đồng</Select.Option>
-              <Select.Option value="3">Bạc</Select.Option>
-              <Select.Option value="4">Vàng</Select.Option>
-              <Select.Option value="5">Kim cương</Select.Option>
-            </Select>
-          </Form.Item>
         </Flex>
         <Form.Item<IFormFieldData>
           name="required_point"
-          label="Điểm số cộng thêm cho thử thách "
+          label="Số điểm yêu cầu thực hiện nhiệm vụ"
           initialValue={0}
         >
           <Slider
@@ -333,19 +323,19 @@ const TaskCreatePage = () => {
           name="short_des"
           label="Mô tả ngắn"
           rules={[
-            { required: true, message: "Mô tả ngắn không được bỏ trống" },
+            { required: true, message: 'Mô tả ngắn không được bỏ trống' },
           ]}
         >
-          <TextArea placeholder="Nhập mô tả ngắn cho thử thách" rows={4} />
+          <TextArea placeholder="Nhập mô tả ngắn cho nhiệm vụ" rows={4} />
         </Form.Item>
         <Form.Item<IFormFieldData>
           name="source"
-          label="Đăng tải thư mục cung cấp thử thách"
+          label="Đăng tải thư mục cung cấp nhiệm vụ"
           valuePropName="fileList"
           rules={[
             {
               required: !sourcePath,
-              message: "Bạn phải đăng tải thư mục cung cấp",
+              message: 'Bạn phải đăng tải thư mục nhiệm vụ',
             },
           ]}
           getValueFromEvent={normFile}
@@ -354,12 +344,9 @@ const TaskCreatePage = () => {
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>
-            <p className="ant-upload-text">
-              Click or drag file to this area to upload
-            </p>
+            <p className="ant-upload-text">Chọn file mà bạn muốn đăng tải</p>
             <p className="ant-upload-hint">
-              Support for a single or bulk upload. Strictly prohibited from
-              uploading company data or other banned files.
+              Chỉ hỗ trợ upload file zip cho thư mục cấp của nhiệm vụ
             </p>
           </Dragger>
         </Form.Item>
@@ -369,10 +356,10 @@ const TaskCreatePage = () => {
           rules={[
             {
               required: !figmaPath,
-              message: "Bạn phải đăng tải file thiết kế",
+              message: 'Bạn phải đăng tải file thiết kế',
             },
           ]}
-          label="Đăng tải file thiết kế của thử thách"
+          label="Đăng tải file thiết kế của nhiệm vụ"
           valuePropName="fileList"
         >
           <Dragger {...propsDraggerFigma}>
@@ -380,23 +367,22 @@ const TaskCreatePage = () => {
               <InboxOutlined />
             </p>
             <p className="ant-upload-text">
-              Click or drag file to this area to upload
+              Chọn File zip chứa thiết kế mà bạn muốn đăng tải
             </p>
             <p className="ant-upload-hint">
-              Support for a single or bulk upload. Strictly prohibited from
-              uploading company data or other banned files.
+              Chỉ hỗ trợ đăng tải File zip chứa các file thiết kế figma
             </p>
           </Dragger>
         </Form.Item>
         <Form.Item<IFormFieldData>
           getValueFromEvent={normFile}
           name="image"
-          label="Đăng tải hình ảnh thử thách"
+          label="Đăng tải hình ảnh nhiệm vụ"
           valuePropName="fileList"
           rules={[
             {
               required: !imagePath,
-              message: "Bạn phải đăng tải hình ảnh của thứ thách,",
+              message: 'Bạn phải đăng tải hình ảnh của nhiệm vụ,',
             },
           ]}
         >
@@ -405,11 +391,10 @@ const TaskCreatePage = () => {
               <InboxOutlined />
             </p>
             <p className="ant-upload-text">
-              Click or drag file to this area to upload
+              Chọn file hình ảnh mà bạn muốn đăng tải
             </p>
             <p className="ant-upload-hint">
-              Support for a single or bulk upload. Strictly prohibited from
-              uploading company data or other banned files.
+              Chỉ hỗ trợ đăng tải file hình ảnh cho nhiệm vụ
             </p>
           </Dragger>
         </Form.Item>
@@ -417,16 +402,18 @@ const TaskCreatePage = () => {
         <Flex justify="stretch" align="stretch" gap={12}>
           <Button
             type="primary"
-            style={{ flex: "2" }}
+            style={{ flex: '2' }}
             size="large"
             htmlType="submit"
+            loading={mutationCreateTask.isPending}
           >
             Đăng tải
           </Button>
           <Button
             variant="dashed"
             color="danger"
-            style={{ flex: "1" }}
+            style={{ flex: '1' }}
+            disabled={mutationCreateTask.isPending}
             size="large"
             onClick={() => {
               if (
@@ -435,11 +422,11 @@ const TaskCreatePage = () => {
                 Boolean(figmaPath)
               ) {
                 Modal.confirm({
-                  title: "Xác nhận thoát",
+                  title: 'Xác nhận thoát',
                   content:
-                    "Khi thoát bạn các dữ liệu sẽ được gỡ bỏ khỏi hệ thống",
-                  okText: "Chấp nhận",
-                  cancelText: "Hủy bỏ",
+                    'Khi thoát bạn các dữ liệu sẽ được gỡ bỏ khỏi hệ thống',
+                  okText: 'Chấp nhận',
+                  cancelText: 'Hủy bỏ',
                   onOk: async () => {
                     if (
                       imagePath !== null ||
@@ -465,10 +452,10 @@ const TaskCreatePage = () => {
                             console.log(error);
                           }),
                         {
-                          pending: "Đang thực hiện hủy bỏ",
-                          success: "Hủy bỏ thành công",
-                          error: "Hủy bỏ thất bại",
-                        },
+                          pending: 'Đang thực hiện hủy bỏ',
+                          success: 'Hủy bỏ thành công',
+                          error: 'Hủy bỏ thất bại',
+                        }
                       );
                     }
 

@@ -8,5 +8,6 @@ export const constantAuthApi = {
   changePassword: "change-password",
   register: "register",
   forgotPassword: "forgotPassword/send",
-  verifyOtp: "verify",
+  verifyOtp: "verify-otp",
+  sendOTP: "auth/send-otp",
 };

@@ -5,6 +5,7 @@ import {
   IRefreshTokenRequest,
   IRegisterTaskerRequest,
   IRemoveFileRequest,
+  ISendOTPRequest,
   IVerifyOtpParams,
   IVerifyOtpRequest,
 } from "../types/request/auth";
@@ -69,6 +70,10 @@ const authService: IAuthService = {
       `${DEFAULT_URL_API}/${constantAuthApi.changePassword}`,
       data,
     );
+  },
+
+  sendOTP: (data: ISendOTPRequest) => {
+    return axiosClient.post(constantAuthApi.sendOTP, data);
   },
 };
 

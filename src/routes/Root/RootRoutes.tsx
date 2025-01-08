@@ -1,23 +1,30 @@
-import { Navigate, RouteObject } from "react-router";
-import constantRoutesRoot from "../../constants/routes/root";
-import { RootController } from "../../pages/Root";
-import { ChallengeManagerController } from "../../pages/ChallengeManager";
-import constantRoutesChallengeManager from "../../constants/routes/challengeManager";
-import constantDynamicRoute from "../../constants/routes/dynamicRoute";
-import { notfoundRoute, notMatchRoute } from "../CommonRoutes";
+import { Navigate, RouteObject } from 'react-router';
+import constantRoutesRoot from '../../constants/routes/root';
+import { RootController } from '../../pages/Root';
+import { ChallengeManagerController } from '../../pages/ChallengeManager';
+import constantRoutesChallengeManager from '../../constants/routes/challengeManager';
+import constantDynamicRoute from '../../constants/routes/dynamicRoute';
+import { notfoundRoute, notMatchRoute } from '../CommonRoutes';
 import {
   taskeeProfileRoute,
   taskerProfileRoute,
-} from "../CommonRoutes/commonRoutes";
-import MentorController from "../../pages/Mentor/Controller";
+} from '../CommonRoutes/commonRoutes';
+import MentorController from '../../pages/Mentor/Controller';
 
 const USER_ROUTES = {
   ROOT: constantRoutesRoot.user.root,
-  CHALLENGE_MANAGER: constantRoutesRoot.user.challengeManage,
-  MENTOR: constantRoutesRoot.user.mentor,
+  EMPLOYE: constantRoutesRoot.user.employer,
   TASKER: constantRoutesRoot.user.tasker,
-  TASKEE: constantRoutesRoot.user.taskee,
-  ALL: constantRoutesRoot.user.all,
+  USER: constantRoutesRoot.user.user,
+  CREATE_EMPLOYEE: constantRoutesRoot.user.createAccountEmployee,
+};
+
+const STATISTIC_ROUTES = {
+  ROOT: constantRoutesRoot.statistic.root,
+};
+
+const SUBSCRIPTION_ROUTES = {
+  ROOT: constantRoutesRoot.subscription.root,
 };
 
 const CHALLENGE_ROUTES = {
@@ -53,6 +60,13 @@ const TASKER_ROUTES = {
   REQUEST_APPROVE: constantRoutesRoot.tasker.requestApprove,
 };
 
+const extendStatisticRoutes: RouteObject[] = [
+  {
+    index: true,
+    element: <RootController.Statistic />,
+  },
+];
+
 const extendTaskerRoutes: RouteObject[] = [
   {
     index: true,
@@ -64,30 +78,33 @@ const extendTaskerRoutes: RouteObject[] = [
   },
 ];
 
+const extendSubscriptionRoutes: RouteObject[] = [
+  {
+    index: true,
+    element: <RootController.Subscription.List />,
+  },
+];
+
 const extendUserRoutes: RouteObject[] = [
   {
     index: true,
-    element: <Navigate to={USER_ROUTES.ALL} replace />,
-  },
-  {
-    path: USER_ROUTES.CHALLENGE_MANAGER,
-    element: <RootController.User.ChallengeManager />,
-  },
-  {
-    path: USER_ROUTES.ALL,
-    element: <RootController.User.All />,
-  },
-  {
-    path: USER_ROUTES.MENTOR,
-    element: <RootController.User.Mentor />,
-  },
-  {
-    path: USER_ROUTES.TASKEE,
-    element: <RootController.User.Taskee />,
+    element: <Navigate to={constantRoutesRoot.user.employer} replace />,
   },
   {
     path: USER_ROUTES.TASKER,
     element: <RootController.User.Tasker />,
+  },
+  {
+    path: USER_ROUTES.EMPLOYE,
+    element: <RootController.User.Employee />,
+  },
+  {
+    path: USER_ROUTES.USER,
+    element: <RootController.User.Taskee />,
+  },
+  {
+    path: `${USER_ROUTES.EMPLOYE}/${USER_ROUTES.CREATE_EMPLOYEE}`,
+    element: <RootController.User.CreateEmployee />,
   },
 ];
 
@@ -208,6 +225,16 @@ const RootRoutes: RouteObject[] = [
   {
     path: PROFILE_ROUTES.PARENT,
     children: [...extendProfileRoutes],
+  },
+
+  {
+    path: SUBSCRIPTION_ROUTES.ROOT,
+    children: extendSubscriptionRoutes,
+  },
+
+  {
+    path: STATISTIC_ROUTES.ROOT,
+    children: extendStatisticRoutes,
   },
 
   taskeeProfileRoute,

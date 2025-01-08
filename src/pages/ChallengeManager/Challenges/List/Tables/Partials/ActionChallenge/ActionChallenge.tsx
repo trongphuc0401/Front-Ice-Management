@@ -103,7 +103,8 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
         >
           Xem chi tiết
         </Button>
-        {challenge.owner.id === profile?.id && (
+        {(challenge.owner.id === profile?.id ||
+          profile?.adminRole === "root") && (
           <Button
             variant="outlined"
             color="danger"

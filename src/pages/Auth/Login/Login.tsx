@@ -138,7 +138,11 @@ const LoginPage: FC = () => {
                 disabled={mutationLogin.isPending}
                 block
                 size="large"
-                onClick={() => navigate(-1)}
+                onClick={() =>
+                  navigate(
+                    `${constantRoutesAuth.root}/${constantRoutesAuth.options}`,
+                  )
+                }
               >
                 Quay lại
               </Button>
@@ -153,7 +157,7 @@ const LoginPage: FC = () => {
                   onClick={() => {
                     const newPath = location.pathname.replace(
                       constantRoutesAuth.tasker.login,
-                      constantRoutesAuth.tasker.register,
+                      constantRoutesAuth.tasker.emailRegistration,
                     );
 
                     navigate(newPath);

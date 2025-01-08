@@ -9,6 +9,12 @@ const mutationKey = {
   regitserTasker: "register-tasker",
   verifyOtp: "verify-otp",
   createTask: "create-task",
+  sendOTP: "send-otp",
+  createComment: "create-comment",
+  removeComment: "remove-comment",
+  removeUser: "remove-user",
+  createEmployeeUser: "create-emloyee-user",
+  updatePriceSubscription: "update-price-subscription",
 };
 
 export default mutationKey;

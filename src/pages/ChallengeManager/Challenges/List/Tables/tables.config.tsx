@@ -1,4 +1,4 @@
-import { TableProps, Avatar, Tag } from "antd";
+import { TableProps, Avatar, Tag, Tooltip } from "antd";
 import IDataTypeChallengeList from "./tables.type";
 import { convertTimestampToVietnamTime } from "../../../../../utils/convertTime";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
@@ -115,7 +115,9 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
     dataIndex: "owner",
     render: (owner: IDataTypeChallengeList["owner"]) => (
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Avatar src={owner.image || defautlAvatar} />
+        <Tooltip placement={"top"} title={owner.fullname}>
+          <Avatar src={owner.image || defautlAvatar} />
+        </Tooltip>
       </div>
     ),
   },
