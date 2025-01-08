@@ -13,6 +13,9 @@ import { ISolutionEntity } from "../../types/entity/solution";
 
 const { Title } = Typography;
 
+const avatarDefault =
+  "https://img.freepik.com/premium-vector/man-empty-avatar-casual-business-style-vector-photo-placeholder-social-networks-resumes_885953-434.jpg";
+
 const ProfileTaskee: FC = () => {
   const { taskeeUsername } = useParams();
   const [solutionsOfTaskee, setSolutionOfTaskee] = useState<ISolutionEntity[]>(
@@ -58,7 +61,11 @@ const ProfileTaskee: FC = () => {
         <Title level={4} style={{ margin: 0 }}>
           Ảnh đại diện
         </Title>
-        <Image src={data?.image} width={120} style={{ borderRadius: "6px" }} />
+        <Image
+          src={data?.image || avatarDefault}
+          width={120}
+          style={{ borderRadius: "6px" }}
+        />
       </Flex>
       <Card loading={isFetching}>
         <Descriptions

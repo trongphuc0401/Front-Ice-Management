@@ -62,7 +62,7 @@ const columnsRequestApproveTable: TableProps<IRootTaskerApprove>["columns"] = [
   {
     align: "center",
     fixed: "right",
-    width: 300,
+    width: 200,
     key: "actions",
     render: (_, record) => <ActionsRequestApprove taskerId={record.id} />,
   },

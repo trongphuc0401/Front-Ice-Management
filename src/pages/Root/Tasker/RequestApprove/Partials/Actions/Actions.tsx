@@ -55,9 +55,6 @@ const ActionsRequestApprove: FC<IActionsRequestApproveProps> = ({
   };
   return (
     <Flex justify="start" align="center" gap={12}>
-      <Button variant="solid" color="primary">
-        Xem chi tiết
-      </Button>
       <Button variant="solid" onClick={onApproveTasker}>
         Duyệt
       </Button>

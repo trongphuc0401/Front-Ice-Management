@@ -1,5 +1,5 @@
-import { SolutionManagement } from "../Mentor/Solutions";
 import { TaskerProfile } from "../MyProfile/Tasker";
+import { SolutionManagement } from "./Solution";
 import { TaskManagement } from "./Task";
 
 const TaskerController = () => {

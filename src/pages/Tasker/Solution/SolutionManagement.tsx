@@ -6,4 +6,4 @@ const SolutionManagement = () => {
 
 SolutionManagement.Details = SolutionDetailsPage;
 
-export default SolutionDetailsPage;
+export default SolutionManagement;

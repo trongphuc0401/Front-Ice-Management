@@ -13,6 +13,7 @@ interface ITaskSolutionModalProps {
   isShow: boolean;
   handleChangeShow: (state: boolean) => void;
 }
+
 const TaskSolutionModal: FC<ITaskSolutionModalProps> = ({
   isShow,
   taskId,

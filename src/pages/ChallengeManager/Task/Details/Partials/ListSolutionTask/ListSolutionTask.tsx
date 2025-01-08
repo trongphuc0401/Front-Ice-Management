@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import challengeManagerService from "../../../../../../service/ChallengeManager/challengeManagerService";
 import { ITaskSolutionEntity } from "../../../../../../types/entity/solution";
 import { constantChallengeManagerQueryKey } from "../../../../../../constants/queryKey/challengeManager";
-import { Table, TableProps } from "antd";
+import { Empty, Table, TableProps } from "antd";
 import columnsTaskSolutionList from "./listSolutionTask.config";
 
 interface IListSolutionTaskProps {
@@ -72,6 +72,9 @@ const ListSolutionTask: FC<IListSolutionTaskProps> = ({ taskId }) => {
       virtual
       scroll={{ x: "max-content" }}
       onChange={handleChangeTable}
+      locale={{
+        emptyText: <Empty description={"Không tìm thấy giải pháp nào..."} />,
+      }}
     />
   );
 };

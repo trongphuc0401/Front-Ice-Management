@@ -4,7 +4,7 @@ import rootService from "../../../../service/Root/RootService";
 import { useState } from "react";
 import { IRootTaskerApprove } from "../../../../types/response/root/tasker";
 import { RedoOutlined } from "@ant-design/icons";
-import { Flex, Button, Typography, Table, TableProps } from "antd";
+import { Flex, Button, Typography, Table, TableProps, Empty } from "antd";
 import { columnsRequestApproveTable } from "./RequestApprove.config";
 import { toast } from "react-toastify";
 
@@ -121,6 +121,11 @@ const RequestApprovePage = () => {
         showHeader
         sticky
         virtual
+        locale={{
+          emptyText: (
+            <Empty description="Không tìm thấy tài khoản tuyển dụng nào cần được duyệt..." />
+          ),
+        }}
       />
     </Flex>
   );

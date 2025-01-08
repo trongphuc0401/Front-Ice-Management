@@ -40,11 +40,12 @@ const VerifyOtpPage = () => {
         mutationVerifyOtp.mutateAsync(paramsMutationVerifyOtp).then(() => {
           const newPath = location.pathname.replace(
             constantRoutesAuth.tasker.verifyOtp,
-            constantRoutesAuth.tasker.registerSuccess,
+            constantRoutesAuth.tasker.register,
           );
           return navigate(newPath, {
             state: {
-              isRegisterSuccess: true,
+              verifyEmailSucceess: true,
+              emailRegistration: emailVerify,
             },
           });
         }),

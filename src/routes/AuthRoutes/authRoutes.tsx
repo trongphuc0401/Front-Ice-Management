@@ -10,6 +10,7 @@ import { VerifyOtpPage } from "../../pages/Auth/VerifyOtp";
 import { ForgotPasswordPage } from "../../pages/Auth/ForgotPassword";
 import { ResultRegisterSuccessPage } from "../../pages/Auth/ResultRegisterSuccess";
 import { ResultNonApprovePage } from "../../pages/Auth/ResultNonApprove";
+import { EmailRegistrationPage } from "../../pages/Auth/EmailRegítration";
 
 const extendAuthRoutes: RouteObject[] = [
   {
@@ -74,6 +75,10 @@ const extendAuthRoutes: RouteObject[] = [
       {
         path: constantRoutesAuth.tasker.login,
         element: <LoginPage />,
+      },
+      {
+        path: constantRoutesAuth.tasker.emailRegistration,
+        element: <EmailRegistrationPage />,
       },
       {
         path: constantRoutesAuth.tasker.register,

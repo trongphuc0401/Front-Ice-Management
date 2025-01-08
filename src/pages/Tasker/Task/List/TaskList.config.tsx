@@ -3,8 +3,8 @@ import { ITaskEntity } from "../../../../types/entity/task";
 import { Flex, Tag } from "antd";
 import { ViewExpiredTime } from "../../../../components/Components/ViewExpiredTime";
 import { ITaskOfTaskerEntity } from "../../../../types/response/tasker/task";
-import { ViewTaskSolution } from "../../../../components/Components/ViewTaskSolution";
 import { ActionsTaskTable } from "./Partials/ActionsTaskTable";
+import { ViewTaskSolution } from "./Partials/ViewTaskSolution";
 
 const columns: TableProps<ITaskOfTaskerEntity>["columns"] = [
   {
@@ -114,7 +114,7 @@ const columns: TableProps<ITaskOfTaskerEntity>["columns"] = [
   },
   {
     fixed: "right",
-    width: 280,
+    width: 340,
     title: "Hành động",
     key: "actions",
     render: (_, record) => <ActionsTaskTable taskId={record.id} />,

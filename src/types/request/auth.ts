@@ -65,3 +65,7 @@ export type IVerifyOtpRequest = {
 export type IVerifyOtpParams = {
   emailVerify: string;
 };
+
+export type ISendOTPRequest = {
+  email: string;
+};

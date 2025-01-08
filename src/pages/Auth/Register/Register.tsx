@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Flex, Typography, Form, Button, Col, Input, Row, Tooltip } from "antd";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { BrandColorLogo } from "../../../assets/images/logos/locals";
 import { FormProps } from "rc-field-form";
 import { IRegisterTaskerRequest } from "../../../types/request/auth";
@@ -10,6 +10,7 @@ import authService from "../../../service/authService";
 import { useLocation, useNavigate } from "react-router";
 import constantRoutesAuth from "../../../constants/routes/authentication";
 import { toast } from "react-toastify";
+import constantRoutesGlobal from "../../../constants/routes/global";
 
 const LogoWrapper = styled.div`
   width: 220px;
@@ -35,6 +36,8 @@ type IFormFieldData = IRegisterTaskerRequest;
 const RegisterPage: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const emailRegistration = location.state?.emailRegistration as string;
+  const verifyEmailSucceess = location.state?.verifyEmailSuccess as string;
   const [form] = Form.useForm<IFormFieldData>();
   const mutationRegisterTasker = useMutation({
     mutationKey: [mutationKey.regitserTasker],
@@ -51,11 +54,12 @@ const RegisterPage: FC = () => {
         .then((response) => {
           const newPath = location.pathname.replace(
             constantRoutesAuth.tasker.register,
-            constantRoutesAuth.tasker.verifyOtp,
+            constantRoutesAuth.tasker.registerSuccess,
           );
           navigate(newPath, {
             state: {
-              emailVerify: response.data.email,
+              emailRegistration: response.data.email,
+              isRegisterSuccess: true,
             },
           });
         }),
@@ -66,6 +70,12 @@ const RegisterPage: FC = () => {
       },
     );
   };
+
+  useEffect(() => {
+    if (!Boolean(emailRegistration) && !Boolean(verifyEmailSucceess)) {
+      return navigate(constantRoutesGlobal.errorPage["404"]);
+    }
+  }, [location.state]);
 
   return (
     <RegisterFormWrapper>
@@ -92,8 +102,9 @@ const RegisterPage: FC = () => {
         <Form<IFormFieldData>
           form={form}
           name="register"
-          initialValues={{ role: "tasker" }}
+          initialValues={{ role: "tasker", email: emailRegistration }}
           style={{ maxWidth: "400px" }}
+          autoComplete="off"
           onFinish={onFinish}
           layout="vertical"
         >
@@ -141,12 +152,17 @@ const RegisterPage: FC = () => {
           <Form.Item
             label="Email"
             name="email"
+            initialValue={emailRegistration}
             rules={[
               { required: true, message: "Vui lòng nhập email!" },
               { type: "email", message: "Email không hợp lệ!" },
             ]}
           >
-            <Input placeholder="Nhập email" />
+            <Input
+              placeholder="Nhập email"
+              defaultValue={emailRegistration}
+              disabled
+            />
           </Form.Item>
 
           {/* Số điện thoại */}
@@ -187,7 +203,7 @@ const RegisterPage: FC = () => {
               { min: 8, message: "Mật khẩu phải có ít nhất 8 ký tự!" },
             ]}
           >
-            <Input.Password placeholder="Nhập mật khẩu" />
+            <Input.Password autoComplete="off" placeholder="Nhập mật khẩu" />
           </Form.Item>
 
           {/* Xác nhận mật khẩu */}

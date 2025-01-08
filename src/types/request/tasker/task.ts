@@ -19,3 +19,7 @@ export type ICreateTaskRequest = {
   figma: string;
   expired: string;
 };
+
+export type IDeleteTaskParams = {
+  taskId: string;
+};
