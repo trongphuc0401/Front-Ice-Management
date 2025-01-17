@@ -12,6 +12,9 @@ import constantRoutesAuth from "../../../constants/routes/authentication";
 import { toast } from "react-toastify";
 import constantRoutesGlobal from "../../../constants/routes/global";
 
+// ---- Import hook useLanguage để dùng t(...) ----
+import { useLanguage } from "../../../contexts/LanguageContext";
+
 const LogoWrapper = styled.div`
   width: 220px;
   heigh: auto;
@@ -38,7 +41,13 @@ const RegisterPage: FC = () => {
   const location = useLocation();
   const emailRegistration = location.state?.emailRegistration as string;
   const verifyEmailSucceess = location.state?.verifyEmailSuccess as string;
+
+  // Lấy form của antd
   const [form] = Form.useForm<IFormFieldData>();
+
+  // Lấy hàm t(...) từ LanguageContext
+  const { t } = useLanguage();
+
   const mutationRegisterTasker = useMutation({
     mutationKey: [mutationKey.regitserTasker],
     mutationFn: async (data: IRegisterTaskerRequest) =>
@@ -46,15 +55,16 @@ const RegisterPage: FC = () => {
   });
 
   const onFinish: FormProps<IFormFieldData>["onFinish"] = async (
-    formValues,
+    formValues
   ) => {
+    // Thay thế text tĩnh bằng t("...") trong toast
     return await toast.promise(
       mutationRegisterTasker
         .mutateAsync({ ...formValues, role: "tasker" })
         .then((response) => {
           const newPath = location.pathname.replace(
             constantRoutesAuth.tasker.register,
-            constantRoutesAuth.tasker.registerSuccess,
+            constantRoutesAuth.tasker.registerSuccess
           );
           navigate(newPath, {
             state: {
@@ -64,10 +74,10 @@ const RegisterPage: FC = () => {
           });
         }),
       {
-        pending: "Đang thực hiện đăng kí thông tin",
-        success: "Đăng kí thông tin tài khoản thành công",
-        error: "Đăng kí thông tin tài khoản thất bại",
-      },
+        pending: t("register.toastPending"),
+        success: t("register.toastSuccess"),
+        error: t("register.toastError"),
+      }
     );
   };
 
@@ -92,9 +102,9 @@ const RegisterPage: FC = () => {
             <img src={BrandColorLogo} />
           </LogoWrapper>
           <Typography style={{ fontSize: "16px" }}>
-            Đăng kí với vai trò{" "}
+            {t("register.title")}{" "}
             <span style={{ color: "#5250F7", fontWeight: "bold" }}>
-              nhà tuyển dụng
+              {t("register.tasker")}
             </span>
           </Typography>
         </Flex>
@@ -112,54 +122,69 @@ const RegisterPage: FC = () => {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                label="Họ"
+                label={t("register.firstNameLabel")}
                 name="firstname"
-                rules={[{ required: true, message: "Vui lòng nhập họ!" }]}
+                rules={[
+                  {
+                    required: true,
+                    message: t("register.firstNameRule"),
+                  },
+                ]}
               >
-                <Input placeholder="Nhập họ" />
+                <Input placeholder={t("register.placeholderFirstName")} />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Tên"
+                label={t("register.lastNameLabel")}
                 name="lastname"
-                rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
+                rules={[
+                  {
+                    required: true,
+                    message: t("register.lastNameRule"),
+                  },
+                ]}
               >
-                <Input placeholder="Nhập tên" />
+                <Input placeholder={t("register.placeholderLastName")} />
               </Form.Item>
             </Col>
           </Row>
+
+          {/* Công ty */}
           <Form.Item
-            label="Công ty"
+            label={t("register.companyLabel")}
             name="company"
-            rules={[{ required: true, message: "Vui lòng nhập tên công ty!" }]}
+            rules={[{ required: true, message: t("register.companyRule") }]}
           >
-            <Input placeholder="Nhập tên công ty" />
+            <Input placeholder={t("register.placeholderCompany")} />
           </Form.Item>
 
           {/* Tên tài khoản */}
           <Form.Item
-            label="Tên tài khoản"
+            label={t("register.usernameLabel")}
             name="username"
             rules={[
-              { required: true, message: "Vui lòng nhập tên tài khoản!" },
+              {
+                required: true,
+                message: t("register.usernameRule"),
+              },
             ]}
           >
-            <Input placeholder="Nhập tên tài khoản" />
+            <Input placeholder={t("register.placeholderUsername")} />
           </Form.Item>
 
           {/* Email */}
           <Form.Item
-            label="Email"
+            label={t("register.emailLabel")}
             name="email"
             initialValue={emailRegistration}
             rules={[
-              { required: true, message: "Vui lòng nhập email!" },
-              { type: "email", message: "Email không hợp lệ!" },
+              { required: true, message: t("register.emailRule") },
+              { type: "email", message: t("register.emailInvalid") },
             ]}
           >
             <Input
-              placeholder="Nhập email"
+              placeholder={t("register.placeholderEmail")}
               defaultValue={emailRegistration}
               disabled
             />
@@ -169,11 +194,8 @@ const RegisterPage: FC = () => {
           <Form.Item
             label={
               <span>
-                Số điện thoại&nbsp;
-                <Tooltip
-                  color="blue"
-                  title="Số điện thoại có thể được sử dụng để quản lý trang web hoặc gọi xác minh doanh nghiệp."
-                >
+                {t("register.phoneLabel")}{" "}
+                <Tooltip color="blue" title={t("register.phoneTooltip")}>
                   <Typography.Text
                     style={{ color: "#1890ff", cursor: "pointer" }}
                   >
@@ -184,51 +206,66 @@ const RegisterPage: FC = () => {
             }
             name="phone"
             rules={[
-              { required: true, message: "Vui lòng nhập số điện thoại!" },
+              {
+                required: true,
+                message: t("register.phoneRule"),
+              },
               {
                 pattern: /^(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})$/,
-                message: "Số điện thoại không hợp lệ!",
+                message: t("register.phoneInvalid"),
               },
             ]}
           >
-            <Input placeholder="Nhập số điện thoại" />
+            <Input placeholder={t("register.placeholderPhone")} />
           </Form.Item>
 
           {/* Mật khẩu */}
           <Form.Item
-            label="Mật khẩu"
+            label={t("register.passwordLabel")}
             name="password"
             rules={[
-              { required: true, message: "Vui lòng nhập mật khẩu!" },
-              { min: 8, message: "Mật khẩu phải có ít nhất 8 ký tự!" },
+              {
+                required: true,
+                message: t("register.passwordRule"),
+              },
+              {
+                min: 8,
+                message: t("register.passwordMin"),
+              },
             ]}
           >
-            <Input.Password autoComplete="off" placeholder="Nhập mật khẩu" />
+            <Input.Password
+              autoComplete="off"
+              placeholder={t("register.placeholderPassword")}
+            />
           </Form.Item>
 
           {/* Xác nhận mật khẩu */}
           <Form.Item
-            label="Xác nhận mật khẩu"
+            label={t("register.passwordConfirmLabel")}
             name="password_confirmation"
             dependencies={["password"]}
             rules={[
-              { required: true, message: "Vui lòng xác nhận mật khẩu!" },
+              {
+                required: true,
+                message: t("register.passwordConfirmRule"),
+              },
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
                   return Promise.reject(
-                    new Error("Mật khẩu xác nhận không khớp với mật khẩu!"),
+                    new Error(t("register.passwordConfirmMismatch"))
                   );
                 },
               }),
             ]}
           >
-            <Input.Password placeholder="Nhập lại mật khẩu" />
+            <Input.Password
+              placeholder={t("register.placeholderPasswordConfirm")}
+            />
           </Form.Item>
-
-          {/* Công ty */}
 
           <Form.Item>
             <Row gutter={12}>
@@ -239,7 +276,7 @@ const RegisterPage: FC = () => {
                   block
                   loading={mutationRegisterTasker.isPending}
                 >
-                  Đăng ký
+                  {t("register.registerButton")}
                 </Button>
               </Col>
               <Col span={8}>
@@ -248,7 +285,7 @@ const RegisterPage: FC = () => {
                   block
                   disabled={mutationRegisterTasker.isPending}
                 >
-                  Quay lại
+                  {t("register.backButton")}
                 </Button>
               </Col>
             </Row>

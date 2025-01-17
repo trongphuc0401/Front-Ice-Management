@@ -1,0 +1,248 @@
+{
+    "optionRole.fronticePanel": "Frontice Panel",
+    "optionRole.chooseRole": "Lựa chọn vai trò của bạn",
+    "role.mentor": "Mentor",
+    "role.challengeManager": "Người quản lý thử thách",
+    "role.tasker": "Người tuyển dụng",
+    "role.root": "Người quản lý website",
+
+    "login.title": "Đăng nhập với vai trò",
+    "login.pleaseInputEmail": "Vui lòng nhập Email!",
+    "login.invalidEmail": "Email không hợp lệ!",
+    "login.pleaseInputPassword": "Vui lòng nhập Mật khẩu!",
+    "login.emailPlaceholder": "Email",
+    "login.passwordPlaceholder": "Mật khẩu",
+    "login.loginButton": "Đăng nhập",
+    "login.backButton": "Quay lại",
+    "login.registerText": "Đăng kí tài khoản",
+
+    "emailRegistration.title": "Đăng ký Email",
+    "emailRegistration.emailLabel": "Email bạn đăng ký",
+    "emailRegistration.emailRequired": "Email không được để trống",
+    "emailRegistration.emailInvalid": "Email không hợp lệ",
+    "emailRegistration.emailPlaceholder": "Nhập email bạn muốn đăng ký",
+    "emailRegistration.registerButton": "Đăng ký",
+    "emailRegistration.backButton": "Quay lại",
+    "emailRegistration.toastPending": "Đang thực hiện xác nhận email",
+    "emailRegistration.toastSuccess": "Đã gửi mã OTP xác nhận qua email",
+    "emailRegistration.toastError": "Xác nhận Email thất bại",
+
+    "register.title": "Đăng ký với vai trò",
+    "register.tasker": "nhà tuyển dụng",
+    "register.firstNameLabel": "Họ",
+    "register.lastNameLabel": "Tên",
+    "register.firstNameRule": "Vui lòng nhập họ!",
+    "register.lastNameRule": "Vui lòng nhập tên!",
+    "register.companyLabel": "Công ty",
+    "register.companyRule": "Vui lòng nhập tên công ty!",
+    "register.usernameLabel": "Tên tài khoản",
+    "register.usernameRule": "Vui lòng nhập tên tài khoản!",
+    "register.emailLabel": "Email",
+    "register.emailRule": "Vui lòng nhập email!",
+    "register.emailInvalid": "Email không hợp lệ!",
+    "register.phoneLabel": "Số điện thoại",
+    "register.phoneTooltip": "Số điện thoại có thể được sử dụng để quản lý trang web hoặc gọi xác minh doanh nghiệp.",
+    "register.phoneRule": "Vui lòng nhập số điện thoại!",
+    "register.phoneInvalid": "Số điện thoại không hợp lệ!",
+    "register.passwordLabel": "Mật khẩu",
+    "register.passwordRule": "Vui lòng nhập mật khẩu!",
+    "register.passwordMin": "Mật khẩu phải có ít nhất 8 ký tự!",
+    "register.passwordConfirmLabel": "Xác nhận mật khẩu",
+    "register.passwordConfirmRule": "Vui lòng xác nhận mật khẩu!",
+    "register.passwordConfirmMismatch": "Mật khẩu xác nhận không khớp với mật khẩu!",
+    "register.registerButton": "Đăng ký",
+    "register.backButton": "Quay lại",
+    "register.placeholderFirstName": "Nhập họ",
+    "register.placeholderLastName": "Nhập tên",
+    "register.placeholderCompany": "Nhập tên công ty",
+    "register.placeholderUsername": "Nhập tên tài khoản",
+    "register.placeholderEmail": "Nhập email",
+    "register.placeholderPhone": "Nhập số điện thoại",
+    "register.placeholderPassword": "Nhập mật khẩu",
+    "register.placeholderPasswordConfirm": "Nhập lại mật khẩu",
+    "register.toastPending": "Đang thực hiện đăng kí thông tin",
+    "register.toastSuccess": "Đăng kí thông tin tài khoản thành công",
+    "register.toastError": "Đăng kí thông tin tài khoản thất bại",
+
+    
+    "resultNonApprove.title": "Tài khoản chưa được duyệt",
+    "resultNonApprove.subTitle": {
+        "part1": "Tài khoản của bạn đã đăng ký thành công nhưng chưa được duyệt bởi admin. Bạn có thể liên hệ qua email:",
+        "part2": "để được hỗ trợ thêm."
+      },
+    "resultNonApprove.copyEmailTooltip": "Sao chép email",
+    "resultNonApprove.copiedEmailTooltip": "Đã sao chép email",
+    "resultNonApprove.backButton": "Quay lại",
+
+    "resultRegisterSuccess.title": "Đăng ký tài khoản thành công",
+    "resultRegisterSuccess.subTitle": {
+      "part1": "Bạn đã đăng ký tài khoản",
+      "part2": "cho vai trò tuyển dụng thành công, xin đợi admin xác thực và duyệt tài khoản."
+    },
+    "resultRegisterSuccess.copyEmailTooltip": "Sao chép email",
+    "resultRegisterSuccess.copiedEmailTooltip": "Đã sao chép email",
+    "resultRegisterSuccess.backButton": "Quay lại",
+    
+      "verifyOtp.title": "Xác thực OTP",
+      "verifyOtp.inputOtpLabel": "Nhập mã OTP",
+      "verifyOtp.copyEmailTooltip": "Sao chép email",
+      "verifyOtp.copiedEmailTooltip": "Đã sao chép email",
+      "verifyOtp.buttonSubmit": "Xác thực",
+      "verifyOtp.buttonBack": "Quay lại",
+      "verifyOtp.notificationError": "Vui lòng nhập đầy đủ mã OTP!",
+      "verifyOtp.toastPending": "Đang thực hiện xác thực OTP: {{otp}}",
+      "verifyOtp.toastSuccess": "Thực hiện xác thực OTP {{otp}} thành công",
+      "verifyOtp.toastError": "Thực hiện xác thực OTP {{otp}} thất bại",
+
+  "userCustomer.myProfile": "Trang cá nhân",
+  "userCustomer.settingProfile": "Cài đặt",
+  "userCustomer.logout": "Đăng xuất",
+  "userCustomer.logoutPending": "Đang thực hiện đăng xuất",
+  "userCustomer.logoutSuccess": "Đăng xuất thành công",
+  "userCustomer.logoutError": "Đăng xuất thất bại",
+
+  "dashboard.challenges": "Thử thách",
+  "dashboard.challenges.list": "Danh sách",
+  "dashboard.challenges.create": "Tạo",
+  
+  "dashboard.solutions": "Giải pháp",
+  "dashboard.solutions.list": "Danh sách",
+  "dashboard.solutions.report": "Tố cáo",
+  
+  "dashboard.tasks": "Nhiệm vụ",
+  "dashboard.tasks.list": "Danh sách",
+  "dashboard.tasks.create": "Tạo mới",
+  "dashboard.tasks.report": "Tố cáo",
+  
+  "dashboard.personal": "Cá nhân",
+  "dashboard.personal.profile": "Trang cá nhân",
+  "dashboard.personal.changePassword": "Đổi mật khẩu",
+  "dashboard.personal.settings": "Cài đặt",
+  
+  "dashboard.statistics": "Thống kê",
+  "dashboard.subscriptions": "Gói thành viên",
+  
+  "dashboard.account": "Tài khoản",
+  "dashboard.account.employers": "Nhân viên",
+  "dashboard.account.employers.list": "Danh sách",
+  "dashboard.account.employers.create": "Tạo tài khoản",
+  "dashboard.account.users": "Người dùng",
+  "dashboard.account.taskers": "Nhà tuyển dụng",
+  
+  "dashboard.recruitment": "Tuyển dụng",
+  "dashboard.recruitment.pendingApproval": "Chờ được duyệt",
+  
+  "dashboard.challenges.create": "Tạo",
+  "dashboard.challenges.report": "Tố cáo",
+  
+    "statistic.title": "Thống kê doanh thu",
+    "statistic.overviewTitle": "Tổng quan",
+    "statistic.dailyChartTitle": "Doanh thu hàng ngày",
+    "statistic.monthlyChartTitle": "Doanh thu hàng tháng",
+    "statistic.accountDistributionTitle": "Phân bổ tài khoản",
+    "overview.totalRevenue": "Tổng doanh thu",
+  "overview.todayRevenue": "Doanh thu hôm nay",
+  "overview.monthRevenue": "Doanh thu tháng",
+  "overview.yearRevenue": "Doanh thu năm",
+  "overview.currency": "VND",
+  "monthlyRevenueChart.title": "Thống kê theo tháng",
+  "monthlyRevenueChart.apply": "Áp dụng",
+  "monthlyRevenueChart.reset": "Xóa",
+  "monthlyRevenueChart.noData": "Không tìm thấy dữ liệu ở khoảng thời gian này",
+  "dailyRevenueChart.title": "Thống kê theo ngày",
+  "dailyRevenueChart.apply": "Áp dụng",
+  "dailyRevenueChart.reset": "Xóa",
+  "dailyRevenueChart.noData": "Không tìm thấy dữ liệu ở khoảng thời gian này",
+  "accountDistribution.title": "Phân bố tài khoản khách",
+  "accountDistribution.loading": "Đang tải dữ liệu...",
+  "accountDistribution.error": "Đã xảy ra lỗi khi tải dữ liệu!",
+  "accountDistribution.premiumAccounts": "Tài khoản Premium",
+  "accountDistribution.taskeeAccountsNonPremium": "Tài khoản Taskee (Non-Premium)",
+  "accountDistribution.taskerAccounts": "Tài khoản Tasker",
+  "subscriptionListPage.title": "Danh sách các gói thành viên",
+  "subscriptionListPage.refreshButton": "Làm mới",
+  "subscriptionListPage.filterButton": "Bộ lọc",
+  
+  "subscriptionListPage.toastRefresh": {
+    "pending": "Đang thực hiện làm mới dữ liệu",
+    "success": "Làm mới dữ liệu thành công",
+    "error": "Làm mới dữ liệu thất bại"
+  },
+  "itemSubscription.labelName": "Tên gói",
+  "itemSubscription.labelType": "Loại gói",
+  "itemSubscription.labelPrice": "Giá tiền",
+  "itemSubscription.labelCreatedAt": "Thời gian tạo gói",
+  "itemSubscription.labelUpdatedAt": "Thời gian cập nhật gói",
+  
+  "itemSubscription.month": "Tháng",
+  "itemSubscription.year": "Năm",
+  "subscriptionItem.cardTitle": "Gói {{name}}",
+  "subscriptionItem.changePriceButton": "Thay đổi giá tiền",
+
+  "subscriptionItem.modalTitleChangePrice": "Thay đổi giá gói {{name}}",
+  "subscriptionItem.modalOkText": "Thay đổi",
+  "subscriptionItem.modalCancelText": "Hủy",
+
+  "subscriptionItem.currentPriceLabel": "Giá hiện tại",
+  "subscriptionItem.newPriceLabel": "Giá cập nhật",
+  "subscriptionItem.placeholderPrice": "Nhập giá bạn muốn cập nhật",
+
+  "subscriptionItem.toastUpdatePrice": {
+    "pending": "Đang thực hiện thay đổi giá",
+    "success": "Thay đổi giá thành công",
+    "error": "Thay đổi giá thất bại"
+  },
+
+  "subscriptionItem.errorPriceSame": "Giá tiền thay đổi không được bằng với giá tiền cũ!",
+  "subscriptionItem.errorPriceLessThan1000": "Giá tiền thay đổi không được bé hơn 1.000 VNĐ!",
+  "challengeList.title": "Danh sách thử thách",
+  "challengeList.refreshButton": "Làm mới",
+  "challengeList.createChallengeButton": "Tạo thử thách mới",
+  "challengeList.filterButton": "Bộ lọc",
+  
+  "challengeList.toastRefresh": {
+    "pending": "Đang thực hiện làm mới dữ liệu thử thách",
+    "success": "Làm mới dữ liệu thử thách thành công",
+    "error": "Làm mới dữ liệu thử thách thất bại"
+  },
+  "allChallenges.createChallenge": "Tạo thử thách",
+  "allChallenges.actionsColumn": "Hành động",
+  "allChallenges.emptyText": "Không tìm thấy thử thách...",
+  "challengeColumns.stt": "STT",
+  "challengeColumns.title": "Tiêu đề",
+  "challengeColumns.technical": "Công nghệ",
+  "challengeColumns.level": "Cấp độ",
+  "challengeColumns.point": "Số điểm",
+  "challengeColumns.premium": "Premium",
+  "challengeColumns.joinTotal": "Tham gia",
+  "challengeColumns.submittedTotal": "Hoàn thành",
+  "challengeColumns.owner": "Người tạo",
+  "challengeColumns.createdAt": "Thời gian tạo",
+  "actionChallenge.viewDetail": "Xem chi tiết",
+  "actionChallenge.delete": "Xóa",
+
+  "actionChallenge.toastDelete": {
+    "pending": "Đang thực hiện xóa thử thách",
+    "success": "Xóa thử thách thành công",
+    "error": "Xóa thử thách thất bại"
+  },
+
+  "actionChallenge.modal": {
+    "title": "Xác nhận xóa thử thách",
+    "okText": "Xác nhận",
+    "cancelText": "Hủy bỏ",
+    "participants": "Số lượng người tham gia",
+    "completed": "Số lượng người hoàn thành",
+    "isPremium": "Đây là thử thách Premium",
+    "confirmDeleteCheck": "Tôi xác nhận xóa thử thách",
+    "confirmPremiumCheck": "Tôi biết đó là thử thách premium"
+  }
+  
+  
+    
+    
+
+
+    
+    
+  }

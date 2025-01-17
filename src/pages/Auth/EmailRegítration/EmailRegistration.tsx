@@ -8,32 +8,40 @@ import { useLocation, useNavigate } from "react-router-dom";
 import constantRoutesAuth from "../../../constants/routes/authentication";
 import styled from "@emotion/styled";
 
+// ---- Import hook useLanguage để dùng t(...) ----
+import { useLanguage } from "../../../contexts/LanguageContext";
+
 const { Title } = Typography;
 
 const EmailRegistrationFormWrapper = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  justify-content: "center";
+  justify-content: center;
   align-items: center;
 `;
 
 const EmailRegistrationPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Lấy t(...) từ context
+  const { t } = useLanguage();
+
   const mutationSendOTP = useMutation({
     mutationKey: [mutationKey.sendOTP],
     mutationFn: async (data: ISendOTPRequest) =>
       await authService.sendOTP(data),
   });
+
   const onFinishForm: FormProps<ISendOTPRequest>["onFinish"] = async (
-    formValue,
+    formValue
   ) => {
     return await toast.promise(
       mutationSendOTP.mutateAsync(formValue).then(() => {
         const newPath = location.pathname.replace(
           constantRoutesAuth.tasker.emailRegistration,
-          constantRoutesAuth.tasker.verifyOtp,
+          constantRoutesAuth.tasker.verifyOtp
         );
 
         navigate(newPath, {
@@ -43,35 +51,44 @@ const EmailRegistrationPage = () => {
         });
       }),
       {
-        pending: "Đang thực hiện xác nhận email",
-        success: "Đã gửi mã OTP xác nhận qua email",
-        error: "Xác nhận Email thất bại",
-      },
+        pending: t("emailRegistration.toastPending"),
+        success: t("emailRegistration.toastSuccess"),
+        error: t("emailRegistration.toastError"),
+      }
     );
   };
 
   return (
     <EmailRegistrationFormWrapper>
       <Flex flex={1} vertical gap={32} justify="center" align="center">
-        <Title>Đăng kí Email</Title>
+        {/* Sử dụng t(...) cho Title */}
+        <Title>{t("emailRegistration.title")}</Title>
+
         <Form
           onFinish={onFinishForm}
           layout="vertical"
           style={{ maxWidth: "300px", width: "100%" }}
         >
           <Form.Item<ISendOTPRequest>
-            label="Email bạn đăng kí"
-            name={"email"}
+            label={t("emailRegistration.emailLabel")}
+            name="email"
             rules={[
-              { required: true, message: "Email không được để trống" },
+              {
+                required: true,
+                message: t("emailRegistration.emailRequired"),
+              },
               {
                 type: "email",
-                message: "Email không hợp lệ",
+                message: t("emailRegistration.emailInvalid"),
               },
             ]}
           >
-            <Input type="email" placeholder="Nhập email bạn muốn đăng kí" />
+            <Input
+              type="email"
+              placeholder={t("emailRegistration.emailPlaceholder")}
+            />
           </Form.Item>
+
           <Form.Item>
             <Button
               variant="solid"
@@ -80,7 +97,7 @@ const EmailRegistrationPage = () => {
               loading={mutationSendOTP.isPending}
               htmlType="submit"
             >
-              Đăng kí
+              {t("emailRegistration.registerButton")}
             </Button>
           </Form.Item>
 
@@ -92,7 +109,7 @@ const EmailRegistrationPage = () => {
                 disabled={mutationSendOTP.isPending}
                 onClick={() => navigate(-1)}
               >
-                Quay lại
+                {t("emailRegistration.backButton")}
               </Button>
             </Flex>
           </Form.Item>

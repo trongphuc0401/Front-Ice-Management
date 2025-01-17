@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { Button, DatePicker, Flex, Spin, Typography } from 'antd';
-import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useQuery } from "@tanstack/react-query";
+import { Button, DatePicker, Flex, Spin, Typography } from "antd";
+import dayjs from "dayjs";
+import { useState } from "react";
 import {
   Bar,
   BarChart,
@@ -10,15 +10,21 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
-import constantRootQueryKeys from '../../../../../constants/queryKey/root';
-import rootService from '../../../../../service/Root/RootService';
-import { formatCurrencyVND } from '../../../../../utils/helper';
+} from "recharts";
+import constantRootQueryKeys from "../../../../../constants/queryKey/root";
+import rootService from "../../../../../service/Root/RootService";
+import { formatCurrencyVND } from "../../../../../utils/helper";
+
+// ---- Import useLanguage để dùng t(...) ----
+import { useLanguage } from "../../../../../contexts/LanguageContext";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 
 const MonthlyRevenueChart = () => {
+  // Lấy hàm t(...) từ context
+  const { t } = useLanguage();
+
   const [monthlyRange, setMonthlyRange] = useState<
     [string | null, string | null]
   >([null, null]);
@@ -34,7 +40,7 @@ const MonthlyRevenueChart = () => {
     queryFn: async () => {
       const [startDate, endDate] = monthlyRange;
       const params = {
-        start_date: startDate ? `${startDate}-1` : '2024-1-1',
+        start_date: startDate ? `${startDate}-1` : "2024-1-1",
         end_date: endDate ? `${endDate}-30` : null,
       };
 
@@ -43,13 +49,13 @@ const MonthlyRevenueChart = () => {
           params
         );
         return (
-          response.data.map((item) => ({
+          response.data.map((item: any) => ({
             ...item,
-            total: parseInt(item.total),
+            total: parseInt(item.total, 10),
           })) || []
         );
       } catch (error) {
-        console.error('Error fetching data: ', error);
+        console.error("Error fetching data: ", error);
         return [];
       }
     },
@@ -60,20 +66,20 @@ const MonthlyRevenueChart = () => {
   };
 
   const handleReset = () => {
-    setMonthlyRange(['2024-01', null]);
+    setMonthlyRange(["2024-01", null]);
     setRangePickerValue(null);
   };
 
   const disabledDate = (current: dayjs.Dayjs) => {
-    const startDate = dayjs('2024-01-01');
+    const startDate = dayjs("2024-01-01");
     const today = dayjs();
     return current && (current.isBefore(startDate) || current.isAfter(today));
   };
 
   return (
-    <Flex vertical gap={24} style={{ width: '100%' }}>
+    <Flex vertical gap={24} style={{ width: "100%" }}>
       <Flex justify="center" align="center">
-        <Title level={4}>Thống kê theo tháng</Title>
+        <Title level={4}>{t("monthlyRevenueChart.title")}</Title>
       </Flex>
 
       <Flex justify="center" align="center" gap={12}>
@@ -82,28 +88,28 @@ const MonthlyRevenueChart = () => {
           value={rangePickerValue}
           onChange={(dates) => {
             setMonthlyRange([
-              dates?.[0]?.format('YYYY-MM') || null,
-              dates?.[1]?.format('YYYY-MM') || null,
+              dates?.[0]?.format("YYYY-MM") || null,
+              dates?.[1]?.format("YYYY-MM") || null,
             ]);
             setRangePickerValue(dates);
           }}
           disabledDate={disabledDate}
         />
         <Button type="primary" onClick={handleMonthlyFilter}>
-          Áp dụng
+          {t("monthlyRevenueChart.apply")}
         </Button>
-        <Button onClick={handleReset}>Xóa</Button>
+        <Button onClick={handleReset}>{t("monthlyRevenueChart.reset")}</Button>
       </Flex>
 
       <ResponsiveContainer width="100%" height={400}>
         {isFetching ? (
-          <Flex justify="center" align="center" style={{ height: '100%' }}>
+          <Flex justify="center" align="center" style={{ height: "100%" }}>
             <Spin size="large" />
           </Flex>
         ) : data?.length === 0 ? (
-          <Flex justify="center" align="center" style={{ height: '100%' }}>
-            <Title level={5} style={{ color: '#999' }}>
-              Không tìm thấy dữ liệu ở khoảng thời gian này
+          <Flex justify="center" align="center" style={{ height: "100%" }}>
+            <Title level={5} style={{ color: "#999" }}>
+              {t("monthlyRevenueChart.noData")}
             </Title>
           </Flex>
         ) : (
@@ -112,7 +118,7 @@ const MonthlyRevenueChart = () => {
             <XAxis dataKey="month" />
             <YAxis tickFormatter={(value) => formatCurrencyVND(value)} />
             <Tooltip
-              formatter={(value: any) => formatCurrencyVND(value) + ' VND'}
+              formatter={(value: any) => formatCurrencyVND(value) + " VND"}
             />
             <Bar dataKey="total" fill="#8884d8" />
           </BarChart>

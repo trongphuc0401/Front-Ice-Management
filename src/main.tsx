@@ -6,16 +6,18 @@ import "./index.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 import { BrowserRouter } from "react-router-dom";
-
+import { LanguageProvider } from "./contexts/LanguageContext";
 const client = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={client}>
-      <BrowserRouter>
-        <ToastContainer />
-        <App />
-      </BrowserRouter>
-    </QueryClientProvider>
-  </StrictMode>,
+    <LanguageProvider>
+      <QueryClientProvider client={client}>
+        <BrowserRouter>
+          <ToastContainer />
+          <App />
+        </BrowserRouter>
+      </QueryClientProvider>
+    </LanguageProvider>
+  </StrictMode>
 );

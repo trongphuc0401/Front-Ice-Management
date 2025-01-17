@@ -4,7 +4,7 @@ import { formatCurrencyVND } from "../../../../utils/helper";
 import { convertTimestampToVietnamTime } from "../../../../utils/convertTime";
 
 const generateItemsDescriptionSubscription: (
-  subscriptionData: ISubscriptionEntity,
+  subscriptionData: ISubscriptionEntity
 ) => DescriptionsProps["items"] = (subscriptionData) => {
   return [
     {
@@ -19,10 +19,10 @@ const generateItemsDescriptionSubscription: (
         subscriptionData.type.split("-")[1] === "monthly"
           ? "Tháng"
           : subscriptionData.type === "monthly"
-            ? "Tháng"
-            : subscriptionData.type === "yearly"
-              ? "Năm"
-              : "",
+          ? "Tháng"
+          : subscriptionData.type === "yearly"
+          ? "Năm"
+          : "",
     },
     {
       label: "Giá tiền",
