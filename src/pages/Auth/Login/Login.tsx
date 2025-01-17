@@ -8,6 +8,7 @@ import { ILoginRequest } from "../../../types/request/login";
 import useLoginLogic from "./login.logic.ts";
 import FormItem from "antd/es/form/FormItem/index";
 import constantRoutesAuth from "../../../constants/routes/authentication.ts";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 type IRoleInPath = "challenge-manager" | "mentor" | "tasker" | "root";
 
@@ -38,23 +39,22 @@ const LoginPage: FC = () => {
   const roleInPath = location.pathname.split("/")[2] as IRoleInPath;
   const [roleValue, setRoleValue] = useState<string>("");
 
+  const { t, setLanguage } = useLanguage();
+
   const { mutationLogin } = useLoginLogic();
   useEffect(() => {
     switch (roleInPath) {
       case "tasker":
-        setRoleValue("Người tuyển dụng");
+        setRoleValue(t("role.tasker")); // Ví dụ: "Người tuyển dụng"
         break;
-
       case "mentor":
-        setRoleValue("Người hỗ trợ");
+        setRoleValue(t("role.mentor")); // Ví dụ: "Người hỗ trợ"
         break;
-
       case "challenge-manager":
-        setRoleValue("Người quản lí thử thách");
+        setRoleValue(t("role.challengeManager")); // Ví dụ: "Người quản lí thử thách"
         break;
-
       case "root":
-        setRoleValue("Người quản lí website");
+        setRoleValue(t("role.root")); // Ví dụ: "Người quản lí website"
         break;
 
       default:
@@ -81,7 +81,7 @@ const LoginPage: FC = () => {
             <img src={BrandColorLogo} />
           </LogoWrapper>
           <Typography style={{ fontSize: "16px" }}>
-            Đăng nhập với vai trò{" "}
+            {t("login.title")}{" "}
             <span style={{ color: "#5250F7", fontWeight: "bold" }}>
               {roleValue}
             </span>
@@ -99,25 +99,35 @@ const LoginPage: FC = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your email!",
+                message: t("login.pleaseInputEmail"),
               },
               {
                 type: "email",
-                message: "Email is not valid!",
+                message: t("login.invalidEmail"),
               },
             ]}
           >
-            <Input size="large" prefix={<UserOutlined />} placeholder="Email" />
+            <Input
+              size="large"
+              prefix={<UserOutlined />}
+              placeholder={t("login.emailPlaceholder")}
+            />
           </Form.Item>
+
           <Form.Item<ILoginRequest>
             name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
+            rules={[
+              {
+                required: true,
+                message: t("login.pleaseInputPassword"),
+              },
+            ]}
           >
             <Input
               size="large"
               prefix={<LockOutlined />}
               type="password"
-              placeholder="Password"
+              placeholder={t("login.passwordPlaceholder")}
             />
           </Form.Item>
 
@@ -130,7 +140,7 @@ const LoginPage: FC = () => {
                 type="primary"
                 htmlType="submit"
               >
-                Đăng nhập
+                {t("login.loginButton")}
               </Button>
             </Col>
             <Col span={8}>
@@ -140,11 +150,11 @@ const LoginPage: FC = () => {
                 size="large"
                 onClick={() =>
                   navigate(
-                    `${constantRoutesAuth.root}/${constantRoutesAuth.options}`,
+                    `${constantRoutesAuth.root}/${constantRoutesAuth.options}`
                   )
                 }
               >
-                Quay lại
+                {t("login.backButton")}
               </Button>
             </Col>
           </Row>
@@ -157,13 +167,12 @@ const LoginPage: FC = () => {
                   onClick={() => {
                     const newPath = location.pathname.replace(
                       constantRoutesAuth.tasker.login,
-                      constantRoutesAuth.tasker.emailRegistration,
+                      constantRoutesAuth.tasker.emailRegistration
                     );
-
                     navigate(newPath);
                   }}
                 >
-                  Đăng kí tài khoản
+                  {t("login.registerText")}
                 </Link>
               </Flex>
             </FormItem>
@@ -173,5 +182,4 @@ const LoginPage: FC = () => {
     </LoginFormWrapper>
   );
 };
-
 export default LoginPage;

@@ -13,6 +13,8 @@ import authService from "../../../../service/authService";
 import { toast } from "react-toastify";
 import constantRoutesGlobal from "../../../../constants/routes/global";
 
+import { useLanguage } from "../../../../contexts/LanguageContext";
+
 interface IUserCustomerProps {}
 
 const { Text } = Typography;
@@ -22,13 +24,15 @@ const UserCustomer: FC<IUserCustomerProps> = () => {
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
 
+  const { t } = useLanguage();
+
   const mutationLogout = useMutation({
     mutationKey: ["logout"],
     mutationFn: async () => {
       return toast.promise(authService.logout(), {
-        pending: "Đang thực hiện đăng xuất",
-        success: "Đăng xuất thành công",
-        error: "Đăng xuất thất bại",
+        pending: t("userCustomer.logoutPending"),
+        success: t("userCustomer.logoutSuccess"),
+        error: t("userCustomer.logoutError"),
       });
     },
     onSuccess: () => {
@@ -51,19 +55,19 @@ const UserCustomer: FC<IUserCustomerProps> = () => {
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: "Trang cá nhân",
+      label: t("userCustomer.myProfile"),
       icon: <ProfileOutlined />,
       onClick: () => handleToProfile(),
     },
     {
       key: "2",
-      label: "Cài đặt",
+      label: t("userCustomer.settingProfile"),
       icon: <SettingOutlined />,
       onClick: () => handleToProfileSetting(),
     },
     {
       key: "3",
-      label: "Đăng xuất",
+      label: t("userCustomer.logout"),
       icon: <LogoutOutlined />,
       onClick: () => handleLogout(),
     },

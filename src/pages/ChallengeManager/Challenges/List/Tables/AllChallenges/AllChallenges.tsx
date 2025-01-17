@@ -8,24 +8,30 @@ import { IGetAllChallengeParams } from "../../../../../../types/request/challeng
 import { constantChallengeManagerQueryKey } from "../../../../../../constants/queryKey/challengeManager";
 import generateQueryKeyChallenges from "../../challengeList.utils";
 import { ActionChallenge } from "../Partials/ActionChallenge";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import constantRoutesChallengeManager from "../../../../../../constants/routes/challengeManager";
 
-const DEFAULT_CUREENT_PAGE: number = 1;
+// ---- Import useLanguage để gọi t(...) ----
+import { useLanguage } from "../../../../../../contexts/LanguageContext";
+
+const DEFAULT_CURRENT_PAGE: number = 1;
 const DEFAULT_PAGE_SIZE: number = 10;
 
 const typeChallenge: IGetAllChallengeParams["get"] = null;
 
 const AllChallengesTable: FC = () => {
+  // Lấy hàm t(...) từ context
+  const { t } = useLanguage();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const columns = challengeListColumn || [];
+
   const [currentPage, setCurrentPage] = useState<number | string>(
-    searchParams.get("page") || DEFAULT_CUREENT_PAGE,
+    searchParams.get("page") || DEFAULT_CURRENT_PAGE
   );
   const [pageSize, setPageSize] = useState<number | string>(
-    searchParams.get("limit") || DEFAULT_PAGE_SIZE,
+    searchParams.get("limit") || DEFAULT_PAGE_SIZE
   );
   const [total, setTotal] = useState<number>(0);
   const [challengesList, setChallengesList] = useState<
@@ -38,7 +44,7 @@ const AllChallengesTable: FC = () => {
       page: currentPage,
       perPage: pageSize,
       get: typeChallenge,
-    },
+    }
   );
 
   const { isFetching } = useQuery({
@@ -46,29 +52,26 @@ const AllChallengesTable: FC = () => {
     queryFn: async () => {
       const searchParamsEntries = Object.fromEntries(searchParams.entries());
       const filters: IGetAllChallengeParams["filter"] = {};
+
       if (searchParamsEntries["levels"]) {
         filters.levels = searchParamsEntries["levels"].split("-");
       }
-
       if (searchParamsEntries["timeCreated"]) {
         filters.timeCreated = searchParamsEntries["timeCreated"].split("-");
       }
-
       if (searchParamsEntries["technical"]) {
         filters.technical = searchParamsEntries["technical"].split("-");
       }
-
       if (searchParamsEntries["owners"]) {
         filters.owners = searchParamsEntries["owners"].split("%%");
       }
-
       if (searchParamsEntries["points"]) {
         filters.points = searchParamsEntries["points"].split("-");
       }
-
       if (searchParamsEntries["premium"]) {
         filters.premium = true;
       }
+
       try {
         const response = await challengeManagerService.challenge.getAll({
           page: currentPage,
@@ -81,14 +84,14 @@ const AllChallengesTable: FC = () => {
           challenges = [],
           total = 0,
           perPage = 10,
-          // modified name object because same with state
           currentPage: currentPageResponse = 1,
         } = response.data;
+
         setCurrentPage(currentPageResponse);
         setTotal(total);
         setPageSize(perPage);
         setChallengesList(challenges);
-        console.log("render data");
+
         return response.data;
       } catch (error) {
         console.log(error);
@@ -97,13 +100,13 @@ const AllChallengesTable: FC = () => {
   });
 
   const onChangeTable: TableProps<IDataTypeChallengeList>["onChange"] = (
-    pagination,
+    pagination
   ) => {
     if (pagination.current !== currentPage && pagination.current) {
       const page = pagination.current.toString();
       const currentParams = Object.fromEntries(searchParams.entries());
-      setCurrentPage((pagination?.current as number) || DEFAULT_CUREENT_PAGE);
-      setSearchParams({ ...currentParams, page: page });
+      setCurrentPage(pagination.current);
+      setSearchParams({ ...currentParams, page });
     }
 
     if (
@@ -113,23 +116,25 @@ const AllChallengesTable: FC = () => {
     ) {
       const limit = pagination.pageSize.toString();
       const currentParams = Object.fromEntries(searchParams.entries());
-      setPageSize((pagination?.pageSize as number) || DEFAULT_PAGE_SIZE);
-      setSearchParams({ ...currentParams, limit: limit });
+      setPageSize(pagination.pageSize);
+      setSearchParams({ ...currentParams, limit });
     }
   };
 
+  // Nút "Tạo thử thách"
   const buttonCreateChallenge = (
     <Button size="large" icon={<PlusOutlined />}>
       <Link to={constantRoutesChallengeManager.pages.challenges.create}>
-        Tạo thử thách
+        {t("allChallenges.createChallenge")}
       </Link>
     </Button>
   );
 
+  // Cột Hành động
   const actionColumns: TableProps<IDataTypeChallengeList>["columns"] = [
     {
       width: 200,
-      title: "Hành động",
+      title: t("allChallenges.actionsColumn"),
       fixed: "right",
       key: "actions",
       render: (_, record: IDataTypeChallengeList) => (
@@ -157,7 +162,7 @@ const AllChallengesTable: FC = () => {
       onChange={onChangeTable}
       locale={{
         emptyText: (
-          <Empty description={"Không tìm thấy thử thách..."}>
+          <Empty description={t("allChallenges.emptyText")}>
             {buttonCreateChallenge}
           </Empty>
         ),

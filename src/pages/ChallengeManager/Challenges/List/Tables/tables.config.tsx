@@ -25,7 +25,7 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
     render: (text) => <div>{text}</div>,
   },
   {
-    title: "Công nghệ",
+    title: "Technical",
     key: "technical",
     width: 200,
     dataIndex: "technical",
@@ -50,7 +50,7 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
     },
   },
   {
-    title: "Cấp độ",
+    title: "Level",
     width: 124,
     key: "level",
     dataIndex: "level",
@@ -58,7 +58,7 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
   },
   {
     width: 100,
-    title: <div style={{ textAlign: "center" }}>Số điểm</div>,
+    title: <div style={{ textAlign: "center" }}>Point</div>,
     key: "point",
     dataIndex: "point",
     render: (point: string) => (
@@ -81,7 +81,7 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
     },
   },
   {
-    title: () => <div style={{ textAlign: "center" }}>Tham gia</div>,
+    title: () => <div style={{ textAlign: "center" }}>Joined</div>,
     width: 120,
     key: "joinTotal",
     dataIndex: "joinTotal",
@@ -95,7 +95,7 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
     ),
   },
   {
-    title: () => <div style={{ textAlign: "center" }}>Hoàn thành</div>,
+    title: () => <div style={{ textAlign: "center" }}>Completed</div>,
     width: 140,
     key: "submittedTotal",
     dataIndex: "submittedTotal",
@@ -109,7 +109,7 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
     ),
   },
   {
-    title: () => <div style={{ textAlign: "center" }}>Người tạo</div>,
+    title: () => <div style={{ textAlign: "center" }}>Owner</div>,
     width: 120,
     key: "owner",
     dataIndex: "owner",

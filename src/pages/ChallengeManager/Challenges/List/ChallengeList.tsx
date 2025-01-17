@@ -14,14 +14,16 @@ import { ITypeOfChallenges } from "../../../../types/other/challenge";
 import useAuthStore from "../../../../store/Auth/authStore";
 import { AllChallengesTable } from "./Tables/AllChallenges";
 
+// ---- Import useLanguage để dùng t(...) ----
+import { useLanguage } from "../../../../contexts/LanguageContext";
+
 const ChallengeListPage: FC = () => {
   const profile = useAuthStore((state) => state.profile);
-  console.log(profile?.role);
   const [searchParams, setSearchParams] = useSearchParams();
   const openDrawerFilter =
     useDrawerChallengesFilterStore.getState().openDrawerFilter;
   const typeOfChallenges = useDrawerChallengesFilterStore(
-    (state) => state.typeOfChallenges,
+    (state) => state.typeOfChallenges
   );
   const changeTypeOfChallenge =
     useDrawerChallengesFilterStore.getState().changeTypeOfChallenge;
@@ -29,6 +31,9 @@ const ChallengeListPage: FC = () => {
   const queryClient = useQueryClient();
   const [isLoadingRefreshChallengebutton, setIsLoadingRefreshChallengeButton] =
     useState<boolean>(false);
+
+  // Lấy hàm t(...) để i18n
+  const { t } = useLanguage();
 
   const handleChangeTabs: TabsProps["onChange"] = (activeKeyTab: string) => {
     setSearchParams({ tab: activeKeyTab });
@@ -56,14 +61,13 @@ const ChallengeListPage: FC = () => {
         })
         .finally(() => setIsLoadingRefreshChallengeButton(false)),
       {
-        pending: "Đang thực hiện làm mới dữ liệu thử thách",
-        success: "Làm mới dữ liệu thử thách thành công",
-        error: "Làm mới dữ liệu thử thách thất bại",
-      },
+        pending: t("challengeList.toastRefresh.pending"),
+        success: t("challengeList.toastRefresh.success"),
+        error: t("challengeList.toastRefresh.error"),
+      }
     );
   };
 
-  console.log("render challenge list page");
   return (
     <>
       <section className="challenges__manager">
@@ -79,42 +83,39 @@ const ChallengeListPage: FC = () => {
           >
             <div>
               <Title level={3} style={{ margin: "0" }}>
-                Danh sách thử thách
+                {t("challengeList.title")}
+                {/* "Danh sách thử thách" */}
               </Title>
             </div>
             <div>
               <Flex justify="flex-end" align="stretch" gap={12}>
                 <Button
                   size="large"
-                  variant="outlined"
-                  color="primary"
                   icon={<RedoOutlined />}
                   onClick={() => revalidateChallenges()}
                   loading={isLoadingRefreshChallengebutton}
                 >
-                  Làm mới
+                  {t("challengeList.refreshButton")}
                 </Button>
 
                 <Button
                   type="primary"
-                  color="primary"
                   size="large"
                   icon={<PlusOutlined />}
                   onClick={() =>
                     navigate(
-                      constantRoutesChallengeManager.pages.challenges.create,
+                      constantRoutesChallengeManager.pages.challenges.create
                     )
                   }
                 >
-                  Tạo thử thách mới
+                  {t("challengeList.createChallengeButton")}
                 </Button>
                 <Button
-                  color="primary"
                   size="large"
                   icon={<FilterOutlined />}
                   onClick={() => openDrawerFilter()}
                 >
-                  Bộ lọc
+                  {t("challengeList.filterButton")}
                 </Button>
               </Flex>
             </div>

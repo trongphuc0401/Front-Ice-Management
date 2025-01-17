@@ -19,6 +19,9 @@ import { toast } from "react-toastify";
 import { constantChallengeManagerQueryKey } from "../../../../../../../constants/queryKey/challengeManager";
 import useAuthStore from "../../../../../../../store/Auth/authStore";
 
+// ---- Import useLanguage để dùng t(...) ----
+import { useLanguage } from "../../../../../../../contexts/LanguageContext";
+
 interface IActionChallengeProps {
   challenge: IChallengeEntity;
 }
@@ -27,6 +30,10 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
   const profile = useAuthStore((state) => state.profile);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  // Lấy hàm t(...) để dịch
+  const { t } = useLanguage();
+
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [knowRemoveChallenge, setKnowRemoveChallenge] =
     useState<boolean>(false);
@@ -66,10 +73,10 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
     return toast.promise(
       mutationRemoveChallenge.mutateAsync().then(() => setIsOpenModal(false)),
       {
-        pending: "Đang thực hiện xóa thử thách",
-        success: "Xóa thử thách thành công",
-        error: "Xóa thử thách thất bại",
-      },
+        pending: t("actionChallenge.toastDelete.pending"),
+        success: t("actionChallenge.toastDelete.success"),
+        error: t("actionChallenge.toastDelete.error"),
+      }
     );
   };
 
@@ -78,18 +85,16 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
       if (knowRemoveChallenge && knowPremiumChallenge) {
         return false;
       }
-
       return true;
     }
-
     if (knowRemoveChallenge) {
       return false;
     }
-
     return true;
   }
 
   const conditionButtonRemove = checkDisabledButton();
+
   return (
     <>
       <Flex gap={12} justify="start" align="center">
@@ -97,20 +102,17 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
           type="primary"
           onClick={() =>
             navigate(
-              `/${constantRoutesChallengeManager.pages.challenges.root}/${constantRoutesChallengeManager.pages.challenges.details}/${challenge.id}`,
+              `/${constantRoutesChallengeManager.pages.challenges.root}/${constantRoutesChallengeManager.pages.challenges.details}/${challenge.id}`
             )
           }
         >
-          Xem chi tiết
+          {t("actionChallenge.viewDetail")}
         </Button>
+
         {(challenge.owner.id === profile?.id ||
           profile?.adminRole === "root") && (
-          <Button
-            variant="outlined"
-            color="danger"
-            onClick={() => setIsOpenModal(true)}
-          >
-            Xóa
+          <Button onClick={() => setIsOpenModal(true)}>
+            {t("actionChallenge.delete")}
           </Button>
         )}
       </Flex>
@@ -118,11 +120,9 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
       <Modal
         open={isOpenModal}
         width={620}
-        title={"Xác nhận xóa thử thách"}
-        okText={"Xác nhận"}
-        onOk={handleRemoveChallenge}
-        cancelText={"Hủy bỏ"}
-        onClose={() => setIsOpenModal(false)}
+        title={t("actionChallenge.modal.title")}
+        okText={t("actionChallenge.modal.okText")}
+        cancelText={t("actionChallenge.modal.cancelText")}
         onCancel={() => setIsOpenModal(false)}
         footer={() => (
           <>
@@ -130,18 +130,14 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
               loading={mutationRemoveChallenge.isPending}
               disabled={conditionButtonRemove}
               onClick={handleRemoveChallenge}
-              variant="solid"
-              color="danger"
             >
-              Xóa
+              {t("actionChallenge.delete")}
             </Button>
             <Button
-              variant="outlined"
-              color="primary"
               onClick={() => setIsOpenModal(false)}
               disabled={mutationRemoveChallenge.isPending}
             >
-              Hủy
+              {t("actionChallenge.modal.cancelText")}
             </Button>
           </>
         )}
@@ -150,21 +146,22 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
           <Flex justify="space-between" align="stretch" gap={24}>
             <Card bordered style={{ flex: 1 }}>
               <Statistic
-                title="Số lượng người tham gia"
+                title={t("actionChallenge.modal.participants")}
                 value={challenge.joinTotal}
               />
             </Card>
             <Card bordered style={{ flex: 1 }}>
               <Statistic
-                title="Số lượng người hoàn thành"
+                title={t("actionChallenge.modal.completed")}
                 value={challenge.submittedTotal}
               />
             </Card>
           </Flex>
+
           <Flex vertical gap={12} justify="start" align="stretch">
             {challenge.premium && (
               <Typography style={{ fontWeight: "bold" }}>
-                Đây là thử thách Premium
+                {t("actionChallenge.modal.isPremium")}
               </Typography>
             )}
 
@@ -172,14 +169,15 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
               value={knowRemoveChallenge}
               onChange={handleChangeKnowRemoveChallenge}
             >
-              Tôi xác nhận xóa thử thách
+              {t("actionChallenge.modal.confirmDeleteCheck")}
             </Checkbox>
+
             {challenge.premium && (
               <Checkbox
                 value={knowPremiumChallenge}
                 onChange={handleChangeKnowChallengePremium}
               >
-                Tôi biết đó là thử thách premium
+                {t("actionChallenge.modal.confirmPremiumCheck")}
               </Checkbox>
             )}
           </Flex>

@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { Button, DatePicker, Flex, Spin, Typography } from 'antd';
-import { useState } from 'react';
+import { useQuery } from "@tanstack/react-query";
+import { Button, DatePicker, Flex, Spin, Typography } from "antd";
+import { useState } from "react";
 import {
   CartesianGrid,
   Line,
@@ -9,16 +9,22 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
-import constantRootQueryKeys from '../../../../../constants/queryKey/root';
-import rootService from '../../../../../service/Root/RootService';
-import { formatCurrencyVND } from '../../../../../utils/helper';
-import dayjs from 'dayjs';
+} from "recharts";
+import constantRootQueryKeys from "../../../../../constants/queryKey/root";
+import rootService from "../../../../../service/Root/RootService";
+import { formatCurrencyVND } from "../../../../../utils/helper";
+import dayjs from "dayjs";
+
+// ---- Import useLanguage để dùng t(...) ----
+import { useLanguage } from "../../../../../contexts/LanguageContext";
 
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
 
 const DailyRevenueChart = () => {
+  // Lấy hàm t(...) từ context
+  const { t } = useLanguage();
+
   const [dailyRange, setDailyRange] = useState<[string | null, string | null]>([
     null,
     null,
@@ -33,20 +39,20 @@ const DailyRevenueChart = () => {
     queryFn: async () => {
       const [startDate, endDate] = dailyRange;
       const params = {
-        start_date: startDate || '2024-01-01',
+        start_date: startDate || "2024-01-01",
         end_date: endDate || null,
       };
 
       try {
         const response = await rootService.statistic.getStatisticDays(params);
         return (
-          response.data.map((item) => ({
+          response.data.map((item: any) => ({
             ...item,
             total: parseInt(item.total),
           })) || []
         );
       } catch (error) {
-        console.error('Error fetching data: ', error);
+        console.error("Error fetching data: ", error);
         return [];
       }
     },
@@ -57,20 +63,20 @@ const DailyRevenueChart = () => {
   };
 
   const disabledDate = (current: dayjs.Dayjs) => {
-    const startDate = dayjs('2024-01-01');
+    const startDate = dayjs("2024-01-01");
     const today = dayjs();
     return current && (current.isBefore(startDate) || current.isAfter(today));
   };
 
   const handleReset = () => {
-    setDailyRange(['2024-01-01', null]);
+    setDailyRange(["2024-01-01", null]);
     setRangePickerValue(null);
   };
 
   return (
-    <Flex vertical gap={24} style={{ width: '100%' }}>
+    <Flex vertical gap={24} style={{ width: "100%" }}>
       <Flex justify="center" align="center">
-        <Title level={4}>Thống kê theo ngày</Title>
+        <Title level={4}>{t("dailyRevenueChart.title")}</Title>
       </Flex>
 
       <Flex justify="center" gap={12} align="center">
@@ -78,28 +84,28 @@ const DailyRevenueChart = () => {
           value={rangePickerValue}
           onChange={(dates) => {
             setDailyRange([
-              dates?.[0]?.format('YYYY-MM-DD') || null,
-              dates?.[1]?.format('YYYY-MM-DD') || null,
+              dates?.[0]?.format("YYYY-MM-DD") || null,
+              dates?.[1]?.format("YYYY-MM-DD") || null,
             ]);
             setRangePickerValue(dates);
           }}
           disabledDate={disabledDate}
         />
         <Button type="primary" onClick={handleDailyFilter}>
-          Áp dụng
+          {t("dailyRevenueChart.apply")}
         </Button>
-        <Button onClick={handleReset}>Xóa</Button>
+        <Button onClick={handleReset}>{t("dailyRevenueChart.reset")}</Button>
       </Flex>
 
       <ResponsiveContainer width="100%" height={400}>
         {isFetching ? (
-          <Flex justify="center" align="center" style={{ height: '100%' }}>
+          <Flex justify="center" align="center" style={{ height: "100%" }}>
             <Spin size="large" />
           </Flex>
         ) : data?.length === 0 ? (
-          <Flex justify="center" align="center" style={{ height: '100%' }}>
-            <Title level={5} style={{ color: '#999' }}>
-              Không tìm thấy dữ liệu ở khoảng thời gian này
+          <Flex justify="center" align="center" style={{ height: "100%" }}>
+            <Title level={5} style={{ color: "#999" }}>
+              {t("dailyRevenueChart.noData")}
             </Title>
           </Flex>
         ) : (
@@ -108,7 +114,7 @@ const DailyRevenueChart = () => {
             <XAxis dataKey="date" />
             <YAxis tickFormatter={(value) => formatCurrencyVND(value)} />
             <Tooltip
-              formatter={(value: any) => formatCurrencyVND(value) + ' VND'}
+              formatter={(value: any) => formatCurrencyVND(value) + " VND"}
             />
             <Line type="monotone" dataKey="total" stroke="#82ca9d" />
           </LineChart>
